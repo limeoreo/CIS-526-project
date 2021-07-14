@@ -8,6 +8,8 @@ function displayMaps(data){
     display.textContent = "";
     const url = "https://open.mapquestapi.com/staticmap/v4/getmap?key=xUKTW6hFYMieaxS4W19rh5JAVaZQ8xNU&size=600,400&zoom=13&pois=purple,";
     for(let i = 0; i<data.length; i++){
+      var link = document.createElement("a");
+      link.href = "/box-locations/"+data[i].id;
       var card = document.createElement("div");
       var map = document.createElement("img");
       map.src = url + data[i].lat + "," + data[i].lng + ",-20,-20";
@@ -15,7 +17,8 @@ function displayMaps(data){
       loc.textContent = data[i].name;
       card.appendChild(map);
       card.appendChild(loc);
-      display.appendChild(card);
+      link.appendChild(card);
+      display.appendChild(link);
     };
 }
 /** @function useXHR 

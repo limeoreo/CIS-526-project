@@ -15,7 +15,7 @@ h1{
 body{
   background-image: url("gingham1.jpeg");
 }
-.card-container > div {
+.card-container > a {
     margin: 1rem;
     padding: 1rem;
     border: 1px solid gray;
