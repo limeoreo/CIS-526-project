@@ -10,6 +10,7 @@ var templates = {};
 var files = fs.readdirSync('templates');
 files.forEach(file => {
   // Compile the template file and add it to templates
+  console.log(file);
   const templateString = fs.readFileSync(path.join('templates', file), {encoding: "utf8"});
   templates[path.basename(file, '.ejs')] = ejs.compile(templateString);
 });

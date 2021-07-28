@@ -13,15 +13,16 @@ function boxlocationDetails(req, res){
   var loc = box.name;
   var lg;
   var newrequestHtml;
-  if (!parseCookie(req.headers.cookie)[0]){
+  var user = req.cookies.currUser;
+  if (user){
+    lg = templates['logged-in.html']({userName: user});
+    newrequestHtml = templates['request-form.html']({id:id, userName : user});
+    res.setHeader('Set-Cookie', "currUser="+user+";");
+  }
+  else{
     var msg2 = "Please sign in or sign up to make requests:";
     lg = templates['notlogged-in.html']();
     newrequestHtml = templates['signin-before-request.html']({message:msg2});
-  }
-  else{
-    lg = templates['logged-in.html']({firstname: req.params.firstname});
-    newrequestHtml = templates['request-form.html']({id});
-    res.setHeader('Set-Cookie', "loginStatus=true;");
   }
   var detailsHtml = templates['box-details.html']({boxlocation: loc, boximg: boxImg});
   var requestsHtml = templates['posted-requests.html']({requests});
@@ -38,24 +39,4 @@ function boxlocationDetails(req, res){
 
 module.exports = boxlocationDetails;
 
-/** @function parseCookie
- * Parses a cookie and converts it to an associative array
- * @param {string} cookie - the cookie to parse
- * @returns {Object} the assocative array of key/value pairs
- */
-function parseCookie(cookie) {
-  var cookies = {};
-  // Cookies are key/value pairs separated by semicolons,
-  // followed by a space, so split the cookie by that string
-  cookie.split('; ').forEach(function(pair) {
-    // Individual key/value are separated by an equal sign (=)
-    pair = pair.split('=');
-    var key = pair[0];
-    // values are URI encoded, so decode them
-    var value = decodeURIComponent(pair[1]);
-    // Assign values to keys in the associative array
-    cookies[key] = value;
-  });
-  // Return the parsed cookies
-  return cookies;
-}
+

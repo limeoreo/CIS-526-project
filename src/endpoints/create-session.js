@@ -33,7 +33,7 @@ function createSession(req, res) {
  */
 function success(req, res, user) {
   res.statusCode = 302;
-  res.setHeader('Set-Cookie', "loginStatus=true;");
+  res.setHeader('Set-Cookie', "currUser="+user.email+";");
   res.setHeader("Location", "/");
   res.end();
 }

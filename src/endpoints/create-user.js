@@ -38,7 +38,8 @@ function createUser(req, res) {
  */
 function success(req, res, userID) {
   res.statusCode = 302;
-  res.setHeader('Set-Cookie', "loginStatus=true;");
+  var user = db.prepare(`SELECT * FROM users WHERE id= ?`).get(userID);
+  res.setHeader('Set-Cookie', "currUser="+user.email+";");
   res.setHeader("Location", "/");
   res.end();
 }

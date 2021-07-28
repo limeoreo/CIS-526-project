@@ -4,7 +4,7 @@
 }
 
 h1{
-  text-align: center;
+  text-align: left;
   margin: 1rem;
   padding: 1rem;
   border: 1px solid gray;
@@ -12,8 +12,11 @@ h1{
   box-shadow: 5px 5px 5px darkgray;
   background-color: whitesmoke;
 }
+
 body{
   background-image: url("gingham1.jpeg");
+  margin : 0px !important;
+  padding : 0;
 }
 .card-container > a {
     margin: 1rem;
@@ -47,15 +50,16 @@ body{
 }
 
 .nav-bar {
+  border: 2px solid black;
   display: block;
   list-style-type: none;
   margin:0;
-  margin-bottom: 10;
   padding: 0;
   position: fixed;
   top: 0;
   width: 100%;
   background-color:darkgray;
+  box-sizing: border-box;
 }
 
 .nav-bar li{
@@ -72,10 +76,20 @@ li a:hover {
   background-color: #111;
 }
 
+header{
+  padding: 10;
+  width: 100%;
+  background-color:darkgray;
+}
+
+.main-page{
+  margin-top:50px;
+}
+
 .one-box{
     margin: 1rem;
     margin-top: 10;
-    padding: 1rem;
+    padding: 0;
     border: 1px solid gray;
     border-radius: 5px;
     box-shadow: 5px 5px 5px darkgray;
