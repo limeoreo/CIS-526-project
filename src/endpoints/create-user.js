@@ -25,7 +25,7 @@ function createUser(req, res) {
     if(err) return serveError(req, res, 500, err);
     // TODO: Save user to the database
     var info = db.prepare("INSERT INTO users (email, firstname, lastname, cryptedPassword) VALUES (?, ?, ?, ?);").run(email, firstname, lastname, hash);
-    if(info.changes === 1) success(req, res);
+    if(info.changes === 1) success(req, res, email);
     else failure(req, res, "An error occurred.  Please try again.");
   });
 }
@@ -36,10 +36,10 @@ function createUser(req, res) {
  * @param {http.ServerResponse} res - the response object
  * @param {integer} userID - the id of the user in the database
  */
-function success(req, res, userID) {
+function success(req, res, email) {
   res.statusCode = 302;
-  var user = db.prepare(`SELECT * FROM users WHERE id= ?`).get(userID);
-  res.setHeader('Set-Cookie', "currUser="+user.email+";");
+  
+  res.setHeader('Set-Cookie', "currUser="+email+";");
   res.setHeader("Location", "/");
   res.end();
 }
@@ -56,9 +56,11 @@ function failure(req, res, errorMessage) {
     errorMessage: errorMessage
   });
   var msg1 = "" ;
+  var aL = "";
   var lg = templates['notlogged-in.html']();
   var html = templates["nav-layout.html"]({
-    title: "Sign In",
+    title: "Sign Up",
+    adminLinks: aL,
     loginStatus: lg,
     post: form,
   });

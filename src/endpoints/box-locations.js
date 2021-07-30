@@ -6,11 +6,10 @@ const templates = require('../templates');
 
 function boxLocations(req, res){
   var boxes = db.prepare("SELECT * FROM boxes ORDER BY id ASC").all();
-  
   var json = JSON.stringify(boxes);
-  var user = req.cookies.currUser;
+  //var user = req.cookies.currUser;
 
-  res.setHeader('Set-Cookie', "currUser="+user+";");
+  //res.setHeader('Set-Cookie', "currUser="+user+";");
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Content-Length", json.length);
   res.end(json);

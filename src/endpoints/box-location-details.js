@@ -13,22 +13,31 @@ function boxlocationDetails(req, res){
   var loc = box.name;
   var lg;
   var newrequestHtml;
+  var roleNum;
+  var aL;
   var user = req.cookies.currUser;
+  
   if (user){
     lg = templates['logged-in.html']({userName: user});
     newrequestHtml = templates['request-form.html']({id:id, userName : user});
     res.setHeader('Set-Cookie', "currUser="+user+";");
+    roleNum = db.prepare(`SELECT role_id FROM users WHERE email=?`).pluck().get(user);
+    if(roleNum !== 0) aL = templates['admin-links.html']() ;
+    else aL = "";
   }
   else{
     var msg2 = "Please sign in or sign up to make requests:";
     lg = templates['notlogged-in.html']();
     newrequestHtml = templates['signin-before-request.html']({message:msg2});
+    aL = "";
   }
+  
   var detailsHtml = templates['box-details.html']({boxlocation: loc, boximg: boxImg});
-  var requestsHtml = templates['posted-requests.html']({requests});
+  var requestsHtml = templates['posted-requests.html']({requests: requests, boxID:id});
   var layoutHtml = templates['onebox-layout.html']({boxlocation: loc, boxdetails:detailsHtml, requestlist:requestsHtml, requestform:newrequestHtml});
   var html = templates["nav-layout.html"]({
     title: "Box Details",
+    adminLinks: aL,
     loginStatus: lg,
     post: layoutHtml,
   });

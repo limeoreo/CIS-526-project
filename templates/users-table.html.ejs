@@ -1,0 +1,26 @@
+<table style="width:100%">
+  <tr>
+    <th>ID</th>
+    <th>Email</th>
+    <th>Firstname</th>
+    <th>Lastname</th>
+    <th>Role</th>
+    <th>Edit</th>
+  </tr>
+  <% users.forEach((u) => { %>
+      <tr>
+        <td><%=u.id%></td>
+        <td><%=u.email%></td>
+        <td><%=u.firstname%></td>
+        <td><%=u.lastname%></td>
+      
+        <% if (u.role_id !== 0) { %>
+          <td>Admin</td>
+        <% } else{ %>
+          <td>Visitor</td>
+        <% } %>
+        <td><a display="inline" href="/users/<%=u.id%>">edit</a></td>
+        
+      </tr>
+  <% }); %>
+</table>

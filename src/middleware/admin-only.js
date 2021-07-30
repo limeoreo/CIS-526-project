@@ -1,4 +1,5 @@
 const serveError = require('../serve-error');
+const db = require('../database');
 
 /** @function authorsOnly 
  * This middleware prevents access to a route by users without the author role
@@ -8,11 +9,13 @@ const serveError = require('../serve-error');
  * @param {http.ServerResponse} res - the response object 
  * @param {function} next - a callback to invoke when the request is fulfillable
  */
-function authorsOnly(req, res, next) {
-  var session = req.session;
-  if(!req.session.user) return res.writeHead(302, {Location: "/signin"}).end();
-  if(req.session.user.role === "Author") next();
-  else serveError(req, res, 403, `User with role ${req.session.user.role} attempted to use an author-only route`);
+function adminOnly(req, res, next) {
+  var user = req.cookies.currUser;
+  if(!user) return res.writeHead(302, {Location: "/signin"}).end();
+  var roleNum = db.prepare(`SELECT role_id FROM users WHERE email=?`).pluck().get(user);
+  console.log(roleNum);
+  if(roleNum !== 0) next();
+  else serveError(req, res, 403, `User with role "Visitor" attempted to use an admin-only route`);
 }
 
-module.exports = authorsOnly;
+module.exports = adminOnly;

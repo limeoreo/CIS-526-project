@@ -51,7 +51,7 @@ body{
 
 .nav-bar {
   border: 2px solid black;
-  display: block;
+  overflow: hidden;
   list-style-type: none;
   margin:0;
   padding: 0;
@@ -63,8 +63,9 @@ body{
 }
 
 .nav-bar li{
-  float: right;
   list-style-type: none;
+  display: inline-block;
+  padding-left: 10px;
 }
 
 a {
@@ -72,8 +73,23 @@ a {
   padding: 8px;
 }
 
+li{
+  padding-right: 10px;
+}
+
 li a:hover {
   background-color: #111;
+  color: whitesmoke;
+}
+
+li a:hover h2{
+  background-color: #111;
+  color: whitesmoke;
+}
+
+li a:hover h3{
+  background-color: #111;
+  color: whitesmoke;
 }
 
 header{
@@ -83,7 +99,7 @@ header{
 }
 
 .main-page{
-  margin-top:50px;
+  margin-top:100px;
 }
 
 .one-box{
@@ -96,3 +112,50 @@ header{
     background-color: whitesmoke;
 }
 
+.marked-off{
+  text-decoration: line-through;
+}
+
+table{
+  margin-top: 30px;
+}
+
+td{
+  border: 1px solid #ddd;
+  padding: 8px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: white;
+}
+
+th{
+  border: 1px solid #ddd;
+  padding: 8px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #44314e;
+  color: white;
+}
+
+.login{
+  float: right;
+  padding-left: 5px;
+}
+
+.home{
+  list-style-type: none;
+  display: inline-block;
+  padding: 0;
+  border: 2px solid black;
+  border-radius: 4px;
+  background-color: darkgray;
+}
+
+.requesting * {
+  display: inline-block;
+  vertical-align: middle;
+  margin-top: 5px;
+  margin-bottom: 10px;
+}

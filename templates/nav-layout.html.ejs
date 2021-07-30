@@ -1,21 +1,23 @@
 <!doctype HTML>
 <html lang="en">
-  <head >
-    <title>Milestone 5</title>
-    <link href="/site.css" rel="stylesheet" type="text/css">
+  <head>
+    <title>Milestone 6</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" sizes="32x32" href="favicon-32x32.png">
     <link rel="small-icon" sizes= "16x16" href="favicon-16x16.png">
     <link rel="big-icon" sizes="64x64" href="favicon-64x64.png">
+    <link href="/site.css" rel="stylesheet" type="text/css">
   </head>
   <body>
     <header>
       <ul class="nav-bar">
-        <li style="float:left;"><h2>MHK Community Chest</h2></li>
+        <li><a href="/"><h2>Home</h2></a></li>
+        <%- adminLinks%>
         <%- loginStatus %> 
       </ul>
     </header>
-    <div class="main-page">      
+    <div class="main-page"> 
+      <h1> <%= title%> </h1>
       <%- post %>  
     </div>
     

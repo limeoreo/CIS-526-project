@@ -1,10 +1,13 @@
 <div>
   <h2>Submit a Request</h2>
   <form method="POST" action="/box-locations/<%=id%>/requests">
-    <h3>Submitting a request as: <%= userName%> </h3>
-    <label>Request</label>
-    <textarea name="content" rows="3" required></textarea>
+    <h3>Submitting as: <%= userName%> </h3>
+    <div class="requesting">
+      <label for="content">Request: </label>
+      <textarea name="content" rows="2" required></textarea>
 
-    <input type="submit" value="Post"/>
+      <input type="submit" value="Post"/>
+    </div>
+    
   </form>
 </div>

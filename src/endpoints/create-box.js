@@ -1,35 +1,32 @@
-
-const bcrypt = require('bcrypt');
 const templates = require('../templates');
 const db = require('../database');
 const serveError = require('../serve-error');
 
-/** @function createSession
- * A helper method invoked when session creation is
- * successful.  The request should have an object
- * as its body parameter with username and password set.
+/** @function createUser
+ * An endpoint for creating a new user.  The request
+ * should have an object as its body parameter with 
+ * username, password, and passwordConfirmation set.
  * @param {http.IncomingMessage} req - the request object 
  * @param {http.ServerResponse} res - the response object
  */
-function createSession(req, res) {
-  // TODO: Create the session
-  var email = req.body.email;
-  var password = req.body.password;
-  var user = db.prepare("SELECT * FROM users WHERE email = ?").get(email);
-  if(!user) return failure(req, res, "Email/Password not found.  Please try again.");
-  bcrypt.compare(password, user.cryptedPassword, (err, result) => {
-    if(err) return serveError(req, res, 500, err);
-    if(result) success(req, res, email);
-    else return failure(req, res, "email/Password not found. Please try again.");
-  });
+function createBox(req, res) {
+  // TODO: Create the user
+  var name = req.body.boxname;
+  var lat = req.body.latitude;
+  var long = req.body.longitude;
+  var email = req.cookies.currUser;
+  var existingBox = db.prepare("SELECT * FROM boxes WHERE name = ?").get(name);
+  if(existingBox) return failure(req, res, `The Box "${name}" already exists`);
+  var info = db.prepare("INSERT INTO boxes (name, lat, lng) VALUES (?, ?, ?);").run(name, lat, long);
+  if(info.changes === 1) success(req, res, email);
+  else failure(req, res, "An error occurred.  Please try again.");
 }
 
-/** @function success
- * Helper function for creating the user session after 
- * a successful login attempt.
+/** @function success 
+ * A helper method invoked when user creation is successful.
  * @param {http.IncomingMessage} req - the request object 
  * @param {http.ServerResponse} res - the response object
- * @param {object} user - the user who signed in
+ * @param {integer} userID - the id of the user in the database
  */
 function success(req, res, email) {
   res.statusCode = 302;
@@ -39,22 +36,21 @@ function success(req, res, email) {
 }
 
 /** @function failure 
- * A helper function for reporting issues logging a 
- * user in.
+ * A helper method invoked when user creation fails.
  * @param {http.IncomingMessage} req - the request object 
  * @param {http.ServerResponse} res - the response object
- * @param {string} errorMessage - the error message for the user
+ * @param {string} errorMessage - a message to display to the user
  */
 function failure(req, res, errorMessage) {
   if(!errorMessage) errorMessage = "There was an error processing your request.  Please try again."
-  var form = templates["signin.html"]({
+  var form = templates["new-box.html"]({
     errorMessage: errorMessage
   });
   var msg1 = "" ;
   var aL = "";
   var lg = templates['notlogged-in.html']();
   var html = templates["nav-layout.html"]({
-    title: "Sign In",
+    title: "New Box",
     adminLinks: aL,
     loginStatus: lg,
     post: form,
@@ -64,4 +60,4 @@ function failure(req, res, errorMessage) {
   res.end(html);
 }
 
-module.exports = createSession;
+module.exports = createBox;

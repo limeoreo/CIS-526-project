@@ -5,9 +5,11 @@ module.exports = function(req, res) {
     errorMessage: ""
   });
   var msg1 = "" ;
+  var aL = "";
   var lg = templates['notlogged-in.html']();
   var html = templates["nav-layout.html"]({
     title: "Sign Up",
+    adminLinks: aL,
     loginStatus: lg,
     post: form,
   });

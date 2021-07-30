@@ -2,9 +2,12 @@
   <h2>Requests</h2>
   <ul>
   <% requests.forEach((r) => { %>
-    <li>
-      <%= r.request %>
+      <% if (r.fulfilled == 1) { %>
+        <li class="marked-off" ><%= r.request %></li>
+      <% } else{ %>
+        <li><%= r.request %> <a display="inline" href="/box-locations/<%= boxID %>/requests/<%= r.id %>/fulfill">mark as fulfilled</a>
+        </li>
+      <% } %>
   <% }); %>
   </ul>
 </div>
-<!-- add fulfilled label -->

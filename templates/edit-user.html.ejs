@@ -1,0 +1,26 @@
+<div>
+  <form method="POST">
+
+    <label for="id">ID:</label>
+    <input type="text" name="id" value="<%=user.id%>" readonly=true/>
+    
+    <label for="email">Email:</label>
+    <input type="text" name="email" value="<%=user.email%>"/>
+    
+    <label for="firstname">Firstname:</label>
+    <input type="text" name="firstname" value="<%=user.firstname%>"/>
+    
+    <label for="lastname">Lastname:</label>
+    <input type="text" name="lastname" value="<%=user.lastname%>"/>
+    
+    <label for="admin">Admin? </label>
+    <% if (user.role_id !== 0) { %>
+       <input type="checkbox" name="admin" value="Admin" checked/>
+    <% } else{ %>
+       <input type="checkbox" name="admin" value="Visitor" />
+    <% } %>
+
+    <input type="submit" value="update"/>
+
+  </form>
+</div>
